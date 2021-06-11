@@ -1,0 +1,23 @@
+---
+title: "script"
+author: "LAR"
+date: "6/11/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# libraries
+```{r}
+library(tidyverse)
+library(readxl)
+```
+
+# data 
+All files need to be saved as .xlsx, and year column added 
+```{r}
+
+```
+
