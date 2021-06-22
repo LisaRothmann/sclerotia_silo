@@ -205,14 +205,14 @@ sf_201920_df <- sf_2020_1 %>%
   rename(per_scl = "3. Sclerotia, %",
          no_samples = "No. of samples")
 
-sf_201213_df %>% 
+sf_df <- sf_201213_df %>% 
   full_join(sf_201314_df) %>% 
   full_join(sf_201415_df) %>% 
   full_join(sf_201516_df) %>% 
   full_join(sf_201617_df) %>% 
   full_join(sf_201718_df) %>% 
   full_join(sf_201819_df) %>% 
-  full_join(sf_201920_df) %>% 
+  full_join(sf_201920_df) %>%
   mutate(over_th = case_when(per_scl == 0 ~ "No sclerotia detected",
                              per_scl > 0 & per_scl < 0.2 ~ "Under all thresholds",
                              per_scl >= 0.2 & per_scl < 4 ~ "Above SANSOR threshold (0.2%)",
@@ -220,8 +220,18 @@ sf_201213_df %>%
 ```
 
 ## silo regions
-s
+
 ```{r}
 silo_regions <- read.csv("data/silo_regions.csv") %>% select(-X)
+
+silo_regions <- silo_regions %>% 
+  rename(region = number)
+
+silo_regions$region <- as.character(silo_regions$region)
+```
+
+## full df
+```{r}
+sf_df %>% full_join(silo_regions) #note there will be NAs introduced as some years there were no recording/reportings of sclerotia at particular silo points.
 ```
 
