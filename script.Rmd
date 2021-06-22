@@ -212,6 +212,16 @@ sf_201213_df %>%
   full_join(sf_201617_df) %>% 
   full_join(sf_201718_df) %>% 
   full_join(sf_201819_df) %>% 
-  full_join(sf_201920_df)
+  full_join(sf_201920_df) %>% 
+  mutate(over_th = case_when(per_scl == 0 ~ "No sclerotia detected",
+                             per_scl > 0 & per_scl < 0.2 ~ "Under all thresholds",
+                             per_scl >= 0.2 & per_scl < 4 ~ "Above SANSOR threshold (0.2%)",
+                             per_scl >=4 ~ "Above DAFF threshold (4%)"))
+```
+
+## silo regions
+s
+```{r}
+silo_regions <- read.csv("data/silo_regions.csv") %>% select(-X)
 ```
 

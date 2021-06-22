@@ -7,14 +7,14 @@
     "folds" : "",
     "hash" : "0",
     "id" : "197FC878",
-    "lastKnownWriteTime" : 1624356109,
-    "last_content_update" : 1624356109998,
+    "lastKnownWriteTime" : 1624357233,
+    "last_content_update" : 1624357233838,
     "path" : "~/GitHub/sclerotia_silo/script.Rmd",
     "project_path" : "script.Rmd",
     "properties" : {
-        "cursorPosition" : "181,16",
+        "cursorPosition" : "222,1",
         "last_setup_crc32" : "134EE93Bbb338d19",
-        "scrollLine" : "166"
+        "scrollLine" : "220"
     },
     "read_only" : false,
     "read_only_alternatives" : [

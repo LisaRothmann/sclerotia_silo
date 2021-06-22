@@ -1,0 +1,6 @@
+"0","#now we join the sclerotia df with the silo lat and lon df.  "
+"0","full.df = df %>% "
+"0","  full_join(reg)"
+"2","Joining, by = ""region""
+"
+"0","full.df"
