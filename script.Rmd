@@ -511,20 +511,22 @@ sb_df <- sb_201213_df %>%
                              per_scl >=4 ~ "Above DAFF threshold (4%)"))
 ```
 
-### silo regions
-
-```{r}
-silo_regions <- read.csv("data/silo_regions.csv") %>% select(-X)
-
-silo_regions <- silo_regions %>% 
-  rename(region = number)
-
-silo_regions$region <- as.character(silo_regions$region)
-```
-
 ### full df
 ```{r}
-sf_df %>% full_join(silo_regions) #note there will be NAs introduced as some years there were no recording/reportings of sclerotia at particular silo points.
+sb_silo <- sb_df %>% full_join(silo_regions) #note there will be NAs introduced as some years there were no recording/reportings of sclerotia at particular silo points.
+```
+
+```{r}
+sb_silo$harvest_year <- as.numeric(sb_silo$harvest_year)
+
+sb_silo <-sb_silo %>% 
+  mutate(crop = "Soybean")
+
+sf_silo <- sf_silo %>% 
+  mutate(crop = "Sunflower")
+
+scl_df <- sf_silo %>% full_join(sb_silo) %>% 
+  drop_na(over_th)
 ```
 
 # analyses
@@ -534,20 +536,20 @@ We create a df for the prevalence of sclerotia recovered from the production reg
 Where prevalnce is defined as the positive events of sclerotia in relation to total sample collected regardless of legislative limitation.  
 ```{r prevalence df}
 prev = scl_df %>% 
-  mutate(freq = case_when(sclerotia_percentage > 0 ~ 1, 
-                          sclerotia_percentage <= 0 ~ 0)) %>% 
-  group_by(crop, year, freq) %>% 
-  dplyr::summarise(count = n()) %>% 
-  full_join(df %>% 
-  mutate(total = case_when(sclerotia_percentage > 0 ~ 1, 
-                          sclerotia_percentage <= 0 ~ 0)) %>% 
-  group_by(crop, year) %>% 
-  dplyr::summarise(total = n()))
+  mutate(freq = case_when(per_scl > 0 ~ 1, 
+                          per_scl <= 0 ~ 0)) %>% 
+  group_by(crop, harvest_year, freq) %>% 
+  summarise(count = n()) %>% 
+  full_join(scl_df %>%
+  mutate(total = case_when(per_scl > 0 ~ 1, 
+                           per_scl <= 0 ~ 0)) %>% 
+  group_by(crop, harvest_year) %>% 
+  summarise(total = n()))
 
 prev = prev %>% 
   filter(freq >= 1) %>% 
     mutate(prev = count/total*100) %>% 
-  dplyr::select(crop, year, total, prev)
+  dplyr::select(crop, harvest_year, total, prev)
 
 write.csv(prev, "tables/scl_recovery.csv")
 ```
