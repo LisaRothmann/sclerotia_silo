@@ -1,0 +1,28 @@
+"0","#2013
+sb_201213_df <- sb_2013_1 %>% 
+  full_join(sb_2013_2) %>% 
+  full_join(sb_2013_3) %>% 
+  full_join(sb_2013_4) %>% 
+  mutate(harvest_year = 2013) %>% 
+  rename(desc = Region) %>% 
+  filter(desc %in% c(""3. Sclerotia, %"", ""No. of samples"")) %>% 
+  distinct() %>%
+ pivot_longer(cols = c(2:23),
+               names_to = ""region"",
+               values_to = ""per_sclerotia"") %>% 
+  pivot_wider(names_from = ""desc"",
+              values_from = ""per_sclerotia"") %>% 
+  rename(per_scl = ""3. Sclerotia, %"",
+         no_samples = ""No. of samples"")
+"
+"2","Joining, by = ""Region""
+"
+"2","Joining, by = ""Region""
+"
+"2","Joining, by = ""Region""
+"
+"2","Error: Can't subset columns that don't exist.
+[31mx[39m Locations 22 and 23 don't exist.
+[34mi[39m There are only 21 columns.
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

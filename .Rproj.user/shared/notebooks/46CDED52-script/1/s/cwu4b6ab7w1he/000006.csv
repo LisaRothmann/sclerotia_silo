@@ -1,0 +1,4 @@
+"0","sf_df %>% full_join(silo_regions) #note there will be NAs introduced as some years there were no recording/reportings of sclerotia at particular silo points.
+"
+"2","Joining, by = ""region""
+"

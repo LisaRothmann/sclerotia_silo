@@ -1,0 +1,6 @@
+"0","silo_regions <- read.csv(""data/silo_regions.csv"") %>% select(-X)"
+"0",""
+"0","silo_regions <- silo_regions %>% "
+"0","  rename(region = number)"
+"0",""
+"0","silo_regions$region <- as.character(silo_regions$region)"
