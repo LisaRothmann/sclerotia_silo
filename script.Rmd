@@ -89,10 +89,8 @@ sf_201213_df <- sf_2013_1 %>%
               values_from = "per_sclerotia") %>% 
   rename(per_scl = "3. Sclerotia, %",
          no_samples = "No. of samples")
-```
 
 
-```{r}
 #2014 
 sf_201314_df <- sf_2014_1 %>% 
   full_join(sf_2014_2) %>% 
@@ -238,7 +236,7 @@ silo_regions$region <- as.character(silo_regions$region)
 
 ### full df
 ```{r}
-sf_df %>% full_join(silo_regions) #note there will be NAs introduced as some years there were no recording/reportings of sclerotia at particular silo points.
+sf_silo <- sf_df %>% full_join(silo_regions) #note there will be NAs introduced as some years there were no recording/reportings of sclerotia at particular silo points.
 ```
 
 ## soybean 
@@ -262,7 +260,6 @@ sb_2014_2 <- read_xlsx("data/soyabean/soya_part_2_2013_2014.xls.xlsx")
 sb_2014_3 <- read_xlsx("data/soyabean/soya_part_3_2013_2014.xls.xlsx")
 sb_2014_4 <- read_xlsx("data/soyabean/soya_part_4_2013_2014.xls.xlsx")
 sb_2014_5 <- read_xlsx("data/soyabean/soya_part_5_2013_2014.xls.xlsx")
-sb_2014_6 <- read_xlsx("data/soyabean/soya_part_6_2013_2014.xls.xlsx")
 
 #2014-2015
 sb_2015_1 <- read_xlsx("data/soyabean/soya_part_1_2014_2015.xls.xlsx")
@@ -292,7 +289,6 @@ sb_2018_4 <- read_xlsx("data/soyabean/soya_part_4_2017_2018.xls.xlsx")
 sb_2019_1 <- read_xlsx("data/soyabean/soya_part_1_2018_2019.xls.xlsx")
 sb_2019_2 <- read_xlsx("data/soyabean/soya_part_2_2018_2019.xls.xlsx")
 sb_2019_3 <- read_xlsx("data/soyabean/soya_part_3_2018_2019.xls.xlsx")
-
 
 #2019-2020
 sb_2020_1 <- read_xlsx("data/soyabean/soya_part_1_2019_2020.xls.xlsx")
@@ -324,143 +320,182 @@ sb_201112_df <- sb_2012_1 %>% #10-15
               values_from = "per_sclerotia") %>%  #seems to be an error here...
   rename(per_scl = "(F) Sclerotia, %",
          no_samples = "No. of samples_scl")
-```
 
-```{r}
 #2013
+sb_2013_1[,2:7]<- lapply(sb_2013_1[,2:7], as.character)
+sb_2013_2[,2:7]<- lapply(sb_2013_2[,2:7], as.character)
+sb_2013_3[,2:7]<- lapply(sb_2013_3[,2:7], as.character)
+sb_2013_4[,2]<- lapply(sb_2013_4[,2], as.character)
+
 sb_201213_df <- sb_2013_1 %>% 
   full_join(sb_2013_2) %>% 
   full_join(sb_2013_3) %>% 
   full_join(sb_2013_4) %>% 
-  mutate(harvest_year = 2013) %>% 
+  mutate(harvest_year = "2013") %>% 
   rename(desc = Region) %>% 
-  filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
+  filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
+  distinct() %>%
+ pivot_longer(cols = c(2:20),
+               names_to = "region",
+               values_to = "per_sclerotia") %>% 
+  pivot_wider(names_from = "desc",
+              values_from = "per_sclerotia") %>% 
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
+
+#2014 
+sb_2014_1[,2:7]<- lapply(sb_2014_1[,2:7], as.character)
+sb_2014_2[,2:7]<- lapply(sb_2014_2[,2:7], as.character)
+sb_2014_3[,2:7]<- lapply(sb_2014_3[,2:7], as.character)
+sb_2014_4[,2:7]<- lapply(sb_2014_4[,7], as.character)
+sb_2014_5[,2]<- lapply(sb_2014_5[,2], as.character)
+
+sb_201314_df <- sb_2014_1 %>% 
+  full_join(sb_2014_2) %>% 
+  full_join(sb_2014_3) %>% 
+  full_join(sb_2014_4) %>% 
+  full_join(sb_2014_5) %>% 
+  mutate(harvest_year = "2014") %>% 
+  rename(desc = Region) %>% 
+    filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
+  distinct() %>%
+ pivot_longer(cols = c(2:26),
+               names_to = "region",
+               values_to = "per_sclerotia") %>% 
+  pivot_wider(names_from = "desc",
+              values_from = "per_sclerotia") %>% 
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
+
+#2015
+sb_2015_1[,2:7]<- lapply(sb_2015_1[,2:7], as.character)
+sb_2015_2[,2:7]<- lapply(sb_2015_2[,2:7], as.character)
+sb_2015_3[,2:7]<- lapply(sb_2015_3[,2:7], as.character)
+sb_2015_4[,2]<- lapply(sb_2015_4[,2], as.character)
+
+sb_201415_df <- sb_2015_1 %>% 
+  full_join(sb_2015_2) %>% 
+  full_join(sb_2015_3) %>% 
+  full_join(sb_2015_4) %>% 
+  mutate(harvest_year = "2015") %>% 
+  rename(desc = Region) %>% 
+    filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
+  distinct() %>%
+ pivot_longer(cols = c(2:25),
+               names_to = "region",
+               values_to = "per_sclerotia") %>% 
+  pivot_wider(names_from = "desc",
+              values_from = "per_sclerotia") %>% 
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
+
+#2016
+sb_2016_1[,2:7]<- lapply(sb_2016_1[,2:7], as.character)
+sb_2016_2[,2:7]<- lapply(sb_2016_2[,2:7], as.character)
+sb_2016_3[,2:7]<- lapply(sb_2016_3[,2:7], as.character)
+sb_2016_4[,2:5]<- lapply(sb_2016_4[,2:5], as.character)
+
+sb_201516_df <- sb_2016_1 %>% 
+  full_join(sb_2016_2) %>% 
+  full_join(sb_2016_3) %>% 
+  full_join(sb_2016_4) %>% 
+  mutate(harvest_year = "2016") %>% 
+  rename(desc = Region) %>% 
+    filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
   distinct() %>%
  pivot_longer(cols = c(2:23),
                names_to = "region",
                values_to = "per_sclerotia") %>% 
   pivot_wider(names_from = "desc",
               values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
-
-#2014 
-sb_201314_df <- sb_2014_1 %>% 
-  full_join(sb_2014_2) %>% 
-  full_join(sb_2014_3) %>% 
-  full_join(sb_2014_4) %>% 
-  mutate(harvest_year = 2014) %>% 
-  rename(desc = Region) %>% 
-    filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
-  distinct() %>%
- pivot_longer(cols = c(2:22),
-               names_to = "region",
-               values_to = "per_sclerotia") %>% 
-  pivot_wider(names_from = "desc",
-              values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
-
-#2015
-sb_201415_df <- sb_2015_1 %>% 
-  full_join(sb_2015_2) %>% 
-  full_join(sb_2015_3) %>% 
-  full_join(sb_2015_4) %>% 
-  mutate(harvest_year = 2015) %>% 
-  rename(desc = Region) %>% 
-    filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
-  distinct() %>%
- pivot_longer(cols = c(2:24),
-               names_to = "region",
-               values_to = "per_sclerotia") %>% 
-  pivot_wider(names_from = "desc",
-              values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
-
-#2016
-sb_201516_df <- sb_2016_1 %>% 
-  full_join(sb_2016_2) %>% 
-  full_join(sb_2016_3) %>% 
-  mutate(harvest_year = 2016) %>% 
-  rename(desc = Region) %>% 
-    filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
-  distinct() %>%
- pivot_longer(cols = c(2:19),
-               names_to = "region",
-               values_to = "per_sclerotia") %>% 
-  pivot_wider(names_from = "desc",
-              values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
 
 #2017
+sb_2017_1[,2:7]<- lapply(sb_2017_1[,2:7], as.character)
+sb_2017_2[,2:7]<- lapply(sb_2017_2[,2:7], as.character)
+sb_2017_3[,2:7]<- lapply(sb_2017_3[,2:7], as.character)
+sb_2017_4[,2:3]<- lapply(sb_2017_4[,2:3], as.character)
+
 sb_201617_df <- sb_2017_1 %>% 
   full_join(sb_2017_2) %>% 
   full_join(sb_2017_3) %>% 
   full_join(sb_2017_4) %>% 
-  mutate(harvest_year = 2017) %>% 
+  mutate(harvest_year = "2017") %>% 
   rename(desc = Region) %>% 
-    filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
-  distinct() %>%
- pivot_longer(cols = c(2:20),
-               names_to = "region",
-               values_to = "per_sclerotia") %>% 
-  pivot_wider(names_from = "desc",
-              values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
-
-#2018
-sb_201718_df <- sb_2018_1 %>% 
-  full_join(sb_2018_2) %>% 
-  full_join(sb_2018_3) %>% 
-  full_join(sb_2018_4) %>% 
-  mutate(harvest_year = 2018) %>% 
-  rename(desc = Region) %>% 
-    filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
-  distinct() %>%
- pivot_longer(cols = c(2:20),
-               names_to = "region",
-               values_to = "per_sclerotia") %>% 
-  pivot_wider(names_from = "desc",
-              values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
-
-#2019
-sb_201819_df <-sb_2019_1 %>% 
-  full_join(sb_2019_2) %>% 
-  full_join(sb_2019_3) %>% 
-  full_join(sb_2019_4) %>% 
-  mutate(harvest_year = 2019) %>% 
-  rename(desc = Region) %>% 
-    filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
-  distinct() %>%
- pivot_longer(cols = c(2:22),
-               names_to = "region",
-               values_to = "per_sclerotia") %>% 
-  pivot_wider(names_from = "desc",
-              values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
-
-#2020
-sb_201920_df <- sb_2020_1 %>% 
-  full_join(sb_2020_2) %>% 
-  full_join(sb_2020_3) %>% 
-  full_join(sb_2020_4) %>% 
-  mutate(harvest_year = 2020) %>% 
-  rename(desc = Region) %>% 
-    filter(desc %in% c("3. Sclerotia, %", "No. of samples")) %>% 
+    filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
   distinct() %>%
  pivot_longer(cols = c(2:21),
                names_to = "region",
                values_to = "per_sclerotia") %>% 
   pivot_wider(names_from = "desc",
               values_from = "per_sclerotia") %>% 
-  rename(per_scl = "3. Sclerotia, %",
-         no_samples = "No. of samples")
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
+
+#2018
+sb_2018_1[,2:7]<- lapply(sb_2018_1[,2:7], as.character)
+sb_2018_2[,2:7]<- lapply(sb_2018_2[,2:7], as.character)
+sb_2018_3[,2:7]<- lapply(sb_2018_3[,2:7], as.character)
+sb_2018_4[,2]<- lapply(sb_2018_4[,2], as.character)
+
+sb_201718_df <- sb_2018_1 %>% 
+  full_join(sb_2018_2) %>% 
+  full_join(sb_2018_3) %>% 
+  full_join(sb_2018_4) %>% 
+  mutate(harvest_year = "2018") %>% 
+  rename(desc = Region) %>% 
+    filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
+  distinct() %>%
+ pivot_longer(cols = c(2:20),
+               names_to = "region",
+               values_to = "per_sclerotia") %>% 
+  pivot_wider(names_from = "desc",
+              values_from = "per_sclerotia") %>% 
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
+
+#2019
+sb_2019_1[,2:7]<- lapply(sb_2019_1[,2:7], as.character)
+sb_2019_2[,2:7]<- lapply(sb_2019_2[,2:7], as.character)
+sb_2019_3[,2:7]<- lapply(sb_2019_3[,2:7], as.character)
+
+sb_201819_df <- sb_2019_1 %>% 
+  full_join(sb_2019_2) %>% 
+  full_join(sb_2019_3) %>% 
+  mutate(harvest_year = "2019") %>% 
+  rename(desc = Region) %>% 
+    filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
+  distinct() %>%
+ pivot_longer(cols = c(2:19),
+               names_to = "region",
+               values_to = "per_sclerotia") %>% 
+  pivot_wider(names_from = "desc",
+              values_from = "per_sclerotia") %>% 
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
+
+#2020
+sb_2020_1[,2:7]<- lapply(sb_2020_1[,2:7], as.character)
+sb_2020_2[,2:7]<- lapply(sb_2020_2[,2:7], as.character)
+sb_2020_3[,2:7]<- lapply(sb_2020_3[,2:7], as.character)
+sb_2020_4[,2:6]<- lapply(sb_2020_4[,2:6], as.character)
+
+sb_201920_df <- sb_2020_1 %>% 
+  full_join(sb_2020_2) %>% 
+  full_join(sb_2020_3) %>% 
+  full_join(sb_2020_4) %>% 
+  mutate(harvest_year = "2020") %>% 
+  rename(desc = Region) %>% 
+    filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
+  distinct() %>%
+ pivot_longer(cols = c(2:24),
+               names_to = "region",
+               values_to = "per_sclerotia") %>% 
+  pivot_wider(names_from = "desc",
+              values_from = "per_sclerotia") %>% 
+  rename(per_scl = "(F) Sclerotia, %",
+         no_samples = "No. of samples_scl")
 
 sb_df <- sb_201213_df %>% 
   full_join(sb_201314_df) %>% 
