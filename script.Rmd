@@ -89,7 +89,10 @@ sf_201213_df <- sf_2013_1 %>%
               values_from = "per_sclerotia") %>% 
   rename(per_scl = "3. Sclerotia, %",
          no_samples = "No. of samples")
+```
 
+
+```{r}
 #2014 
 sf_201314_df <- sf_2014_1 %>% 
   full_join(sf_2014_2) %>% 
@@ -301,18 +304,18 @@ sb_2020_4 <- read_xlsx("data/soyabean/soya_part_4_2019_2020.xls.xlsx")
 ### join
 ```{r}
 #2012
-sb_2012_1[,2:7]<- lapply(sb_2012_1[,2:7], as.character) #some seem to be in numeric and characters this is causing conflits in the join
+sb_2012_1[,2:7]<- lapply(sb_2012_1[,2:7], as.character) #sample number name needed to be changed in raw files
 sb_2012_2[,2:7]<- lapply(sb_2012_2[,2:7], as.character)
 sb_2012_3[,2:7]<- lapply(sb_2012_3[,2:7], as.character)
 sb_2012_4[,2:6]<- lapply(sb_2012_4[,2:6], as.character)
 
-sb_201112_df <- sb_2012_1 %>% 
-  full_join(sb_2012_2) %>% 
-  full_join(sb_2012_3) %>% 
-  full_join(sb_2012_4) %>% 
+sb_201112_df <- sb_2012_1 %>% #10-15
+  full_join(sb_2012_2) %>% #17-24
+  full_join(sb_2012_3) %>% #25-30
+  full_join(sb_2012_4) %>% #31-36
   dplyr::mutate(harvest_year = "2012") %>% 
   rename(desc = Region) %>% 
-  filter(desc %in% c("(F) Sclerotia, %", "No. of samples")) %>% 
+  filter(desc %in% c("(F) Sclerotia, %", "No. of samples_scl")) %>% 
   distinct() %>%
  pivot_longer(cols = c(2:24),
                names_to = "region",
@@ -320,9 +323,8 @@ sb_201112_df <- sb_2012_1 %>%
   pivot_wider(names_from = "desc",
               values_from = "per_sclerotia") %>%  #seems to be an error here...
   rename(per_scl = "(F) Sclerotia, %",
-         no_samples = "No. of samples")
+         no_samples = "No. of samples_scl")
 ```
-
 
 ```{r}
 #2013
