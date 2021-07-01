@@ -1,0 +1,6 @@
+"0","library(tidyverse)#data wrangling and manipulation "
+"0","library(readxl) #importing data"
+"0","library(ggthemes) #plot customisation"
+"0","library(rnaturalearth) #shape file"
+"0","library(ggpubr) #plot customisation"
+"0","library(psych) #descriptive statistics"
