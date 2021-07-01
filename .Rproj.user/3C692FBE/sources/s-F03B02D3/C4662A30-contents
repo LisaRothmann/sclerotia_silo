@@ -573,6 +573,24 @@ prev = prev %>%
     select(crop, harvest_year, total, prev) 
 
 write.csv(prev, "vis/scl_recovery.csv")
+
+#total number of silos
+prev %>% 
+  group_by(crop) %>% 
+  summarise(total = sum(total, na.rm = T))
+
+#maximum and mimimum per crop per annum
+scl_df %>% 
+  group_by(crop, harvest_year) %>% 
+  summarise(total  = sum(no_samples, na.rm = T)) %>% 
+  summarise(min = min(total, na.rm = T),
+            max = max(total, na.rm = T))
+
+#min and max prevalence
+prev %>% 
+  group_by(crop) %>%
+  summarise(min = min(prev, na.rm= T),
+            max = max(prev, na.rm= T))
 ```
 
 ## one way anova
