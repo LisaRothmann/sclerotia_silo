@@ -597,7 +597,7 @@ prev %>%
 Compute the analysis of variance for soybean and sunflower
 ```{r one way anova}
 #Table 2. One-way analysis of variance of sclerotia, produced by Sclerotinia sclerotiorum, percentage recovery from samples collected from soybean and sunflower production regions from 2012 and 2013, respectively.
-
+options(scipen = 999)
 #soybean
 res.aov.sb <- aov(per_scl ~ harvest_year, data = scl_df %>%  
                                                filter(crop =="Soybean"))

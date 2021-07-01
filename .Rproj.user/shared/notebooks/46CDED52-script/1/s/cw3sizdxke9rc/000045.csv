@@ -1,0 +1,5 @@
+"0","#min and max prevalence"
+"0","prev %>% "
+"0","  group_by(crop) %>%"
+"0","  summarise(min = min(prev, na.rm= T),"
+"0","            max = max(prev, na.rm= T))"
