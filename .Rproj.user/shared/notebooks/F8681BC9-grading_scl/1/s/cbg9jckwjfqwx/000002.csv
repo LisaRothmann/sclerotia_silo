@@ -1,6 +1,0 @@
-"0","df <- gsheet2tbl(""https://docs.google.com/spreadsheets/d/1CQKEHIghYEqX1Qy7aX3F5oc5EvzNA15xtcI8Pd_7r0g/edit#gid=0"", ""grading"") #sclerotia dataframe (df)"
-"0",""
-"0","reg <- gsheet2tbl(""https://docs.google.com/spreadsheets/d/1CQKEHIghYEqX1Qy7aX3F5oc5EvzNA15xtcI8Pd_7r0g/edit#gid=1287063361"", ""regions"") #silo latitude and longitude df"
-"0",""
-"0","reg = reg %>% "
-"0","  rename(region = number) #renaming variable region to number"
