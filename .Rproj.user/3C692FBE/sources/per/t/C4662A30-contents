@@ -699,17 +699,19 @@ zar =  zar_df %>%
   dplyr::rename(province = name)#relabeling 
 
 #soybean
+scl_df$group <- factor(scl_df$harvest_year, levels = c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"))
+
 ggplot()+
   geom_sf(data = south_africa)+
+  geom_text(data = scl_df %>%
+                filter(crop == "Soybean") %>%
+                group_by(group) %>%
+                summarise(n = n()) %>%
+                mutate(lon = 30, lat = -34),
+            aes(lon, lat, label = n))+
   geom_jitter(data = scl_df %>% 
               filter(crop == "Soybean"),
             aes(lon, lat, colour = over_th), alpha = 0.6, size = 2)+
-    geom_text(data = scl_df %>% 
-                filter(crop == "Soybean") %>% 
-                group_by(harvest_year) %>% 
-                summarise(n = n()) %>% 
-                mutate(lon = 30, lat = -34),
-            aes(lon, lat, label = n), fontface = 3)+
   scale_color_manual(values = c("orange", "blue", "darkgreen"))+
   ylim(-35, -22.5) +
   xlim(17, 33)+
@@ -718,7 +720,7 @@ ggplot()+
        colour = "Sclerotia thresholds")+
   theme_minimal(base_size = 12)+
   theme(legend.position = "bottom")+
-  facet_wrap(~harvest_year, ncol = 5)+
+  facet_wrap(~group, ncol = 5)+
   ggsave("vis/prod_reg_sb.png", units = "cm", width = 30, height = 15, dpi = 600)
 ```
 
