@@ -717,7 +717,7 @@ ggplot()+
   xlim(17, 33)+
   labs(x = "Longitude",
        y = "Latitude",
-       colour = "Sclerotia thresholds")+
+       shape = "Sclerotia thresholds")+
   theme_minimal(base_size = 12)+
   theme(legend.position = "bottom")+
   facet_wrap(~group, ncol = 5)
@@ -744,7 +744,7 @@ ggplot()+
   xlim(17, 33)+
   labs(x = "Longitude",
        y = "Latitude",
-       colour = "Sclerotia thresholds")+
+       shape = "Sclerotia thresholds")+
   theme_minimal(base_size = 12)+
   theme(legend.position = "bottom")+
   facet_wrap(~harvest_year, ncol = 4)

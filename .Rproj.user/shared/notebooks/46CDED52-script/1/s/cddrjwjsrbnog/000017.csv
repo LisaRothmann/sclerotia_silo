@@ -15,7 +15,7 @@
 "0","  xlim(17, 33)+"
 "0","  labs(x = ""Longitude"","
 "0","       y = ""Latitude"","
-"0","       colour = ""Sclerotia thresholds"")+"
+"0","       shape = ""Sclerotia thresholds"")+"
 "0","  theme_minimal(base_size = 12)+"
 "0","  theme(legend.position = ""bottom"")+"
 "0","  facet_wrap(~harvest_year, ncol = 4)"
