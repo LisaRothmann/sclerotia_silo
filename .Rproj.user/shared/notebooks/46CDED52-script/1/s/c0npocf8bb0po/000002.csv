@@ -8,5 +8,4 @@
 "0","  xlim(17, 33)+"
 "0","  labs(x = ""Longitude"","
 "0","       y = ""Latitude"")+"
-"0","  theme_minimal(base_size = 16)+"
-"0","  ggsave(""vis/prod_regions.png"", units = ""cm"", width = 20, height = 22, dpi = 600)"
+"0","  theme_minimal(base_size = 16)"

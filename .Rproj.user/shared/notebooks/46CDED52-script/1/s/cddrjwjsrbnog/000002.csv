@@ -18,5 +18,4 @@
 "0","       colour = ""Sclerotia thresholds"")+"
 "0","  theme_minimal(base_size = 12)+"
 "0","  theme(legend.position = ""bottom"")+"
-"0","  facet_wrap(~harvest_year, ncol = 4)+"
-"0","  ggsave(""vis/prod_reg_sf.png"", units = ""cm"", width = 30, height = 15, dpi = 600)"
+"0","  facet_wrap(~harvest_year, ncol = 4)"
