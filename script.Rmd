@@ -646,7 +646,7 @@ ggplot()+
     labs(
     x = "Year",
     y = "Sclerotia (%) per soybean sample")
-  ggsave("vis/recovery_sb.png", units = "cm", width = 20, height = 12, dpi = 600)
+  ggsave("vis/recovery_sb.jpeg", units = "cm", width = 20, height = 12, dpi = 600)
 ```
 
 ### sunflower
@@ -681,7 +681,7 @@ ggplot()+
     labs(
     x = "Year",
     y = "Sclerotia (%) per sunflower sample")
-  ggsave("vis/recovery_sf.png", units = "cm", width = 20, height = 12, dpi = 600)
+  ggsave("vis/recovery_sf.jpeg", units = "cm", width = 20, height = 12, dpi = 600)
 ```
 
 ## maps 
@@ -711,8 +711,8 @@ ggplot()+
             aes(lon, lat, label = n))+
   geom_jitter(data = scl_df %>% 
               filter(crop == "Soybean"),
-            aes(lon, lat, colour = over_th), alpha = 0.6, size = 2)+
-  scale_color_manual(values = c("orange", "blue", "darkgreen"))+
+            aes(lon, lat, shape = over_th), alpha = 0.6, size = 2)+
+  scale_shape_manual(values = c(13, 1, 0))+
   ylim(-35, -22.5) +
   xlim(17, 33)+
   labs(x = "Longitude",
@@ -721,7 +721,7 @@ ggplot()+
   theme_minimal(base_size = 12)+
   theme(legend.position = "bottom")+
   facet_wrap(~group, ncol = 5)
-  ggsave("vis/prod_reg_sb.png", units = "cm", width = 30, height = 15, dpi = 600)
+  ggsave("vis/prod_reg_sb.jpeg", units = "cm", width = 30, height = 15, dpi = 600)
 ```
 
 ### sunflower
@@ -732,8 +732,8 @@ ggplot()+
   geom_sf(data = south_africa)+
   geom_jitter(data = scl_df %>% 
               filter(crop == "Sunflower"),
-            aes(lon, lat, colour = over_th), alpha = 0.6, size = 2)+
-  scale_color_manual(values = c("red", "orange", "blue", "darkgreen"))+
+            aes(lon, lat, shape = over_th), alpha = 0.6, size = 2)+
+    scale_shape_manual(values = c(16, 13, 1, 0))+
   geom_text(data = scl_df %>% 
               filter(crop == "Sunflower") %>% 
               group_by(harvest_year) %>% 
@@ -748,7 +748,7 @@ ggplot()+
   theme_minimal(base_size = 12)+
   theme(legend.position = "bottom")+
   facet_wrap(~harvest_year, ncol = 4)
-  ggsave("vis/prod_reg_sf.png", units = "cm", width = 30, height = 15, dpi = 600)
+  ggsave("vis/prod_reg_sf.jpeg", units = "cm", width = 30, height = 15, dpi = 600)
 ```
 ### silo regions
 A map of the regions is made for a frame of reference 
@@ -764,5 +764,5 @@ ggplot()+
   labs(x = "Longitude",
        y = "Latitude")+
   theme_minimal(base_size = 16)
-  ggsave("vis/prod_regions.png", units = "cm", width = 20, height = 22, dpi = 600)
+  ggsave("vis/prod_regions.jpeg", units = "cm", width = 20, height = 22, dpi = 600)
 ```

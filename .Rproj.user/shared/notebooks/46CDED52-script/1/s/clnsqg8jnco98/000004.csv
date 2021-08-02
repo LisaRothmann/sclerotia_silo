@@ -1,1 +1,1 @@
-"0","  ggsave(""vis/recovery_sf.png"", units = ""cm"", width = 20, height = 12, dpi = 600)"
+"0","  ggsave(""vis/recovery_sf.jpeg"", units = ""cm"", width = 20, height = 12, dpi = 600)"
