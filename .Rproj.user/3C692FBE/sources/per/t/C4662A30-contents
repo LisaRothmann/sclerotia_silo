@@ -17,9 +17,17 @@ library(ggthemes) #plot customisation
 library(rnaturalearth) #shape file
 library(ggpubr) #plot customisation
 library(psych) #descriptive statistics
+library(ggsci)
 ```
 
 # data 
+
+```{r}
+#culture collection map
+loc <- read.csv("data/culturecollect.csv")
+```
+
+
 
 ## sunflower
 ```{r}
@@ -803,6 +811,8 @@ A map of the regions is made for a frame of reference
 ```{r region maps}
 ggplot()+
   geom_sf(data = south_africa)+
+  geom_point(data = loc,
+             aes(lon, lat, colour = Host), size = 3, alpha = 0.6, width = 0.5)+
   geom_jitter(data = silo_regions,
             aes(lon, lat), alpha = 0.6, size = 1, width = 0.2)+
     geom_text(data = silo_regions,
@@ -811,8 +821,11 @@ ggplot()+
   xlim(17, 33)+
   labs(x = "Longitude",
        y = "Latitude")+
-  theme_minimal(base_size = 16)
-  ggsave("vis/prod_regions.jpeg", units = "cm", width = 20, height = 22, dpi = 600)
+  theme_minimal(base_size = 16)+
+  scale_color_ucscgb()
+  ggsave("vis/prod_regions_culturecollection.jpeg", units = "cm", width = 20, height = 22, dpi = 600)
+  
+  
 ```
 
 

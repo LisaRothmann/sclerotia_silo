@@ -1,9 +1,0 @@
-"0",""
-"0","#maximum and mimimum per crop per annum"
-"0","scl_df %>% "
-"0","  group_by(crop, harvest_year) %>% "
-"0","  summarise(total  = sum(no_samples, na.rm = T)) %>% "
-"0","  summarise(min = min(total, na.rm = T),"
-"0","            max = max(total, na.rm = T))"
-"2","`summarise()` has grouped output by 'crop'. You can override using the `.groups` argument.
-"
