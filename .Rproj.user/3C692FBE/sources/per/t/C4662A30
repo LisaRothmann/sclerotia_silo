@@ -5,17 +5,17 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3574421386",
+    "hash" : "2314434252",
     "id" : "C4662A30",
-    "lastKnownWriteTime" : 1627903023,
-    "last_content_update" : 1627903023839,
+    "lastKnownWriteTime" : 1652435807,
+    "last_content_update" : 1652435807207,
     "path" : "~/GitHub/sclerotia_silo/script.Rmd",
     "project_path" : "script.Rmd",
     "properties" : {
-        "cursorPosition" : "719,12",
+        "cursorPosition" : "540,0",
         "docOutlineVisible" : "1",
-        "last_setup_crc32" : "BCA694bb338d19",
-        "scrollLine" : "719"
+        "last_setup_crc32" : "",
+        "scrollLine" : "527"
     },
     "read_only" : false,
     "read_only_alternatives" : [

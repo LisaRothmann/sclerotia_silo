@@ -604,6 +604,7 @@ res.aov.sb <- aov(per_scl ~ harvest_year, data = scl_df %>%
 
 summary(res.aov.sb)
 
+
 #sunflower
 res.aov.sf <- aov(per_scl ~ harvest_year, data = scl_df %>%  
                                   filter(crop =="Sunflower"))
@@ -619,11 +620,11 @@ Fig 1 Annual recoveries of sclerotia, produced by _Sclerotinia sclerotiorum_, fr
 ```{r Fig 1}
 ggplot()+
    geom_jitter(data = scl_df %>% filter(crop == "Soybean"), 
-              aes(harvest_year, per_scl), colour = "darkgreen", alpha = 0.6, width = 0.2)+
+              aes(harvest_year, per_scl), colour = "darkgray", alpha = 0.6, width = 0.2)+
   geom_col(data = scl_df %>% filter(crop == "Soybean") %>%  
               group_by(harvest_year) %>%
               dplyr::summarise(mean_per = mean(per_scl)),
-           aes(harvest_year, mean_per), fill = "darkgreen", alpha = 0.2, size = 4)+
+           aes(harvest_year, mean_per), fill = "darkgray", alpha = 0.2, size = 4)+
    geom_errorbar(width = 0.1, colour = "grey40",
                 data = scl_df %>% filter(crop == "Soybean") %>% 
                 group_by(harvest_year) %>%
@@ -655,11 +656,11 @@ Fig 2 Annual recoveries of sclerotia, produced by _Sclerotinia sclerotiorum_, fr
 ```{r Fig 2}
 ggplot()+
    geom_jitter(data = scl_df %>% filter(crop == "Sunflower"), 
-              aes(harvest_year, per_scl), colour = "orange", alpha = 0.6, width = 0.2)+
+              aes(harvest_year, per_scl), colour = "darkgray", alpha = 0.6, width = 0.2)+
   geom_col(data = scl_df %>% filter(crop == "Sunflower") %>%  
               group_by(harvest_year) %>%
               dplyr::summarise(mean_per = mean(per_scl)),
-           aes(harvest_year, mean_per), fill = "orange", alpha = 0.2, size = 4)+
+           aes(harvest_year, mean_per), fill = "darkgray", alpha = 0.2, size = 4)+
    geom_errorbar(width = 0.1, colour = "grey40",
                 data = scl_df %>% filter(crop == "Sunflower") %>% 
                 group_by(harvest_year) %>%
@@ -766,3 +767,27 @@ ggplot()+
   theme_minimal(base_size = 16)
   ggsave("vis/prod_regions.jpeg", units = "cm", width = 20, height = 22, dpi = 600)
 ```
+
+
+```{r}
+#mean_sb_reg <- drop_na(
+  
+  drop_na(sb_silo) %>% 
+  group_by(lat, lon, harvest_year) %>% 
+  summarise(mean = mean(per_scl)) %>% 
+  full_join(silo_regions)
+
+ggplot()+
+  geom_sf(data = south_africa)+
+  geom_jitter(data = mean_sb_reg,
+            aes(lon, lat), alpha = 0.6, size = 1, width = 0.2)+
+    geom_text(data = mean_sb_reg,
+            aes(lon, lat, label=sprintf("%0.2f", round(mean, digits = 2), size = 4 , fontface = 1, colour = "darkblue")))+
+  ylim(-35, -22.5) +
+  xlim(17, 33)+
+  labs(x = "Longitude",
+       y = "Latitude")+
+  theme_minimal(base_size = 16)
+```
+ 
+  
