@@ -1,6 +1,0 @@
-"0","drop_na(sb_silo) %>% 
-  group_by(lat, lon) %>% 
-  summarise(mean = mean(per_scl))
-"
-"2","`summarise()` has grouped output by 'lat'. You can override using the `.groups` argument.
-"

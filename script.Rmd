@@ -620,12 +620,12 @@ Fig 1 Annual recoveries of sclerotia, produced by _Sclerotinia sclerotiorum_, fr
 ```{r Fig 1}
 ggplot()+
    geom_jitter(data = scl_df %>% filter(crop == "Soybean"), 
-              aes(harvest_year, per_scl), colour = "darkgray", alpha = 0.6, width = 0.2)+
+              aes(harvest_year, per_scl), colour = "darkgreen", alpha = 0.6, width = 0.2)+
   geom_col(data = scl_df %>% filter(crop == "Soybean") %>%  
               group_by(harvest_year) %>%
               dplyr::summarise(mean_per = mean(per_scl)),
-           aes(harvest_year, mean_per), fill = "darkgray", alpha = 0.2, size = 4)+
-   geom_errorbar(width = 0.1, colour = "grey40",
+           aes(harvest_year, mean_per), fill = "darkgreen", alpha = 0.2, size = 4)+
+   geom_errorbar(width = 0.1, colour = "darkgreen",
                 data = scl_df %>% filter(crop == "Soybean") %>% 
                 group_by(harvest_year) %>%
             dplyr::summarise(
@@ -656,12 +656,12 @@ Fig 2 Annual recoveries of sclerotia, produced by _Sclerotinia sclerotiorum_, fr
 ```{r Fig 2}
 ggplot()+
    geom_jitter(data = scl_df %>% filter(crop == "Sunflower"), 
-              aes(harvest_year, per_scl), colour = "darkgray", alpha = 0.6, width = 0.2)+
+              aes(harvest_year, per_scl), colour = "orange", alpha = 0.6, width = 0.2)+
   geom_col(data = scl_df %>% filter(crop == "Sunflower") %>%  
               group_by(harvest_year) %>%
               dplyr::summarise(mean_per = mean(per_scl)),
-           aes(harvest_year, mean_per), fill = "darkgray", alpha = 0.2, size = 4)+
-   geom_errorbar(width = 0.1, colour = "grey40",
+           aes(harvest_year, mean_per), fill = "orange", alpha = 0.2, size = 4)+
+   geom_errorbar(width = 0.1, colour = "orange",
                 data = scl_df %>% filter(crop == "Sunflower") %>% 
                 group_by(harvest_year) %>%
             dplyr::summarise(
@@ -723,6 +723,29 @@ ggplot()+
   theme(legend.position = "bottom")+
   facet_wrap(~group, ncol = 5)
   ggsave("vis/prod_reg_sb.jpeg", units = "cm", width = 30, height = 15, dpi = 600)
+  
+  #soybean - colour maps for SASPP
+ggplot()+
+  geom_sf(data = south_africa)+
+  geom_text(data = scl_df %>%
+                filter(crop == "Soybean") %>%
+                group_by(group) %>%
+                summarise(n = n()) %>%
+                mutate(lon = 30, lat = -34),
+            aes(lon, lat, label = n))+
+  geom_jitter(data = scl_df %>% 
+              filter(crop == "Soybean"),
+            aes(lon, lat, colour = over_th), alpha = 0.6, size = 2)+
+  scale_color_manual(values = c("orange", "blue", "darkgreen"))+
+  ylim(-35, -22.5) +
+  xlim(17, 33)+
+  labs(x = "Longitude",
+       y = "Latitude",
+       colour = "Sclerotia thresholds")+
+  theme_minimal(base_size = 12)+
+  theme(legend.position = "bottom")+
+  facet_wrap(~group, ncol = 5)
+  ggsave("vis/prod_reg_sb_colour.jpeg", units = "cm", width = 30, height = 15, dpi = 600)
 ```
 
 ### sunflower
@@ -750,6 +773,30 @@ ggplot()+
   theme(legend.position = "bottom")+
   facet_wrap(~harvest_year, ncol = 4)
   ggsave("vis/prod_reg_sf.jpeg", units = "cm", width = 30, height = 15, dpi = 600)
+  
+#sunflower- SASPP colour
+  ggplot()+
+  geom_sf(data = south_africa)+
+  geom_jitter(data = scl_df %>% 
+              filter(crop == "Sunflower"),
+            aes(lon, lat, colour = over_th), alpha = 0.6, size = 2)+
+    scale_color_manual(values = c("red","orange", "blue", "darkgreen"))+
+  geom_text(data = scl_df %>% 
+              filter(crop == "Sunflower") %>% 
+              group_by(harvest_year) %>% 
+              summarise(n = n()) %>% 
+              mutate(lon = 30, lat = -34),
+            aes(lon, lat, label = n), fontface = 3)+
+  ylim(-35, -22.5) +
+  xlim(17, 33)+
+  labs(x = "Longitude",
+       y = "Latitude",
+       colour = "Sclerotia thresholds")+
+  theme_minimal(base_size = 12)+
+  theme(legend.position = "bottom")+
+  facet_wrap(~harvest_year, ncol = 4)
+  ggsave("vis/prod_reg_sf_colour.jpeg", units = "cm", width = 30, height = 15, dpi = 600)
+  
 ```
 ### silo regions
 A map of the regions is made for a frame of reference 
